@@ -202,6 +202,7 @@ services.flatpak.enable = true;
 	texlive.combined.scheme-full
 	gdal
 	ripgrep
+	x265
 	libgcc
 	tree-sitter
 	gcc
@@ -221,6 +222,7 @@ services.flatpak.enable = true;
 	trezor-suite
 	unstable.bitbox
 	mangohud
+	carapace
 	protonup
 	hashcat
 	thonny
