@@ -5,17 +5,19 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -34,14 +36,14 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Enable the X11 windowing system.
-    services.xserver.enable = true;
-
+  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-services.xserver.displayManager.gdm.wayland = false;
+  # Disable Wayland
+  services.xserver.displayManager.gdm.wayland = false;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -57,78 +59,34 @@ services.xserver.displayManager.gdm.wayland = false;
   services.printing.drivers = [ pkgs.hplip ];
 
   services.avahi = {
-  	enable = true;
-  	nssmdns4 = true;
-	openFirewall = true;
-};
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
 
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
   };
 
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
-
-  hardware.nvidia = {
-
-    # Modesetting is required.
-    modesetting.enable = true;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
-    # of just the bare essentials.
-    powerManagement.enable = false;
-
-    # Fine-grained power management. Turns off GPU when not in use.
-    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
-
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-    # Only available from driver 515.43.04+
-    open = true;
-
-
-    # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
-    nvidiaSettings = true;
-
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-  };
-
-    # Configure Nvidia Prime for iGPU
-  hardware.nvidia.prime = {
-	sync.enable = true;
-	# integrated
-	amdgpuBusId = "PCI:14:00:0";
-
-	# dedicated
-	nvidiaBusId = "PCI:1:00:0";
-	};
   # Steam
 
-    programs.steam = {
-	enable = true;
-	gamescopeSession.enable = true;
-};
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+  };
 
   # Enable Gamemode
-    programs.gamemode.enable = true;
+  programs.gamemode.enable = true;
 
-  # Ollama 
-    services.ollama = {
+  # Ollama
+  services.ollama = {
     enable = true;
     acceleration = "cuda";
-};
+  };
 
-# Install Flatpak
-services.flatpak.enable = true;
+  # Install Flatpak
+  services.flatpak.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -153,13 +111,17 @@ services.flatpak.enable = true;
   users.users.dstrebel = {
     isNormalUser = true;
     description = "Diego Strebel";
-    extraGroups = [ "networkmanager" "wheel" "dialout" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "dialout"
+    ];
     shell = pkgs.nushell;
     packages = with pkgs; [
-    	thunderbird
-	onedrive
-	google-chrome
-	
+      thunderbird
+      onedrive
+      google-chrome
+
     ];
   };
 
@@ -172,61 +134,58 @@ services.flatpak.enable = true;
   # Fonts
 
   fonts.packages = with pkgs; [
-	fira-code
-	comic-mono
-];
+    fira-code
+    comic-mono
+  ];
 
+  # Install Neovim
 
-
-	# Install Neovim
-
-	programs.neovim = {
-  		enable = true;
-  		defaultEditor = true;
-	};
-
-
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  	 # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  	wget
-	pciutils
-	pdal
-	qgis
-	htop
-	orca-slicer
-	ookla-speedtest
-	kdePackages.okular
-	texlive.combined.scheme-full
-	gdal
-	ripgrep
-	x265
-	libgcc
-	tree-sitter
-	gcc
-	gimp
-	blender
-	gnome-tweaks
-	aria2
-	iperf
-	vscode
-	git
-	btop-cuda
-	neofetch
-	cpufetch
-	fastfetch
-	kitty
-	mailspring
-	trezor-suite
-	unstable.bitbox
-	mangohud
-	carapace
-	protonup
-	hashcat
-	thonny
-	unstable.nushell
+    # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    pciutils
+    pdal
+    qgis
+    htop
+    orca-slicer
+    ookla-speedtest
+    kdePackages.okular
+    texlive.combined.scheme-full
+    gdal
+    ripgrep
+    x265
+    libgcc
+    tree-sitter
+    gcc
+    gimp
+    blender
+    gnome-tweaks
+    aria2
+    iperf
+    vscode
+    git
+    btop-cuda
+    neofetch
+    cpufetch
+    fastfetch
+    kitty
+    mailspring
+    trezor-suite
+    nixfmt-rfc-style
+    unstable.bitbox
+    mangohud
+    carapace
+    protonup
+    hashcat
+    thonny
+    unstable.nushell
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

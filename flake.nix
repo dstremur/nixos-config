@@ -29,7 +29,8 @@
 
 }
         ./configuration.nix
-        # inputs.home-manager.nixosModules.default
+        ./nvidia.nix
+	# inputs.home-manager.nixosModules.default
       ];
     };
   };
