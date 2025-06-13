@@ -159,6 +159,7 @@
     orca-slicer
     ookla-speedtest
     kdePackages.okular
+    unstable.hugo
     texlive.combined.scheme-full
     gdal
     ripgrep
