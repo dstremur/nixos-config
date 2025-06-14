@@ -120,7 +120,7 @@
     shell = pkgs.nushell;
     packages = with pkgs; [
       thunderbird
-      onedrive
+      unstable.onedrive
       google-chrome
 
     ];
