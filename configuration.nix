@@ -174,6 +174,7 @@
     iperf
     vscode
     git
+    ethtool
     btop-cuda
     neofetch
     cpufetch
