@@ -180,6 +180,7 @@
     cpufetch
     fastfetch
     kitty
+    mprime
     mailspring
     trezor-suite
     nixfmt-rfc-style
