@@ -153,7 +153,7 @@
     wget
     pciutils
     pdal
-    cudatoolkit
+    unstable.cudatoolkit
     qgis
     htop
     orca-slicer
