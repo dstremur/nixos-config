@@ -46,6 +46,7 @@
           }
           ./configuration.nix
           ./nvidia.nix
+	  ./unfree.nix
           # inputs.home-manager.nixosModules.default
         ];
       };

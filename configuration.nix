@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -14,6 +14,8 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+         
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -130,7 +132,7 @@
   programs.firefox.enable = true;
 
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+#  nixpkgs.config.allowUnfree = true;
 
   # Fonts
 
@@ -153,7 +155,7 @@
     wget
     pciutils
     pdal
-    unstable.cudatoolkit
+    cudatoolkit
     qgis
     htop
     orca-slicer
