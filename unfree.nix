@@ -7,6 +7,8 @@
 }:
 {
 
+  # Allow building with CUDA
+  nixpkgs.config.cudaSupport = true;
   # Allow unfree
 
   nixpkgs.config.allowUnfreePredicate =
@@ -51,6 +53,7 @@
 
       "google-chrome"
 
-    ];
+      "blender"
 
+    ];
 }
