@@ -190,7 +190,7 @@
     nixfmt-rfc-style
     unstable.bitbox
     mangohud
-    carapace
+    unstable.carapace
     protonup
     hashcat
     thonny
