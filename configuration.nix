@@ -194,6 +194,7 @@
     protonup
     hashcat
     thonny
+    unstable.gh
     unstable.nushell
   ];
 
