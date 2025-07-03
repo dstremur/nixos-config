@@ -176,6 +176,8 @@
     gnome-tweaks
     aria2
     iperf
+    libreoffice-qt
+    hunspell
     vscode
     git
     ethtool
