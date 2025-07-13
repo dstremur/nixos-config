@@ -40,6 +40,12 @@
       "libcusparse"
       "libnpp"
 
+      "triton"
+      "torch"
+      "cudnn"
+      "libcusparse_lt"
+      "libcufile"
+
       "ookla-speedtest"
 
       "vscode"

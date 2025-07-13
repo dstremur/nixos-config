@@ -74,6 +74,11 @@
     enable = true;
   };
 
+  # Cuda Cache
+  nix.settings.substituters = [
+    "https://cuda-maintainers.cachix.org"
+  ];
+
   # Steam
 
   programs.steam = {
