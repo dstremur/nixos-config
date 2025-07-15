@@ -79,6 +79,10 @@
     "https://cuda-maintainers.cachix.org"
   ];
 
+  # Enable SSD fstrim
+
+  services.fstrim.enable = true;
+
   # Steam
 
   programs.steam = {
