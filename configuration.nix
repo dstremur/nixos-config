@@ -207,6 +207,7 @@
     thonny
     unstable.gh
     unstable.nushell
+    popsicle
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
