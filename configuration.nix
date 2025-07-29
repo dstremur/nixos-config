@@ -207,6 +207,7 @@
     thonny
     unstable.gh
     unstable.nushell
+    lua-language-server
     popsicle
   ];
 
