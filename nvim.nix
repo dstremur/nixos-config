@@ -40,6 +40,13 @@
         servers = {
           nixd.enable = true;
           clangd.enable = true;
+          cmake.enable = true;
+          ltex.enable = true;
+          quick_lint_js.enable = true;
+          tailwindcss.enable = true;
+          markdown_oxide.enable = true;
+          pylsp.enable = true;
+
         };
       };
 

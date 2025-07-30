@@ -4,9 +4,11 @@
   nixConfig = {
     extra-substituters = [
       "https://cuda-maintainers.cachix.org"
+      "https://lean4.cachix.org/"
     ];
-    extra-trusted-public-keya = [
+    extra-trusted-public-keys = [
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+      "lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk="
     ];
   };
 

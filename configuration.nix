@@ -202,6 +202,8 @@
     unstable.nushell
     lua-language-server
     popsicle
+    lean4
+    elan
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
