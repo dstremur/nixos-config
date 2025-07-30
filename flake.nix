@@ -17,6 +17,15 @@
     #   url = "github:nix-community/home-manager";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
+
+  };
+
+  inputs.nixvim = {
+    url = "github:nix-community/nixvim";
+    # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
+    # url = "github:nix-community/nixvim/nixos-25.05";
+
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -24,6 +33,7 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
+      nixvim,
       ...
     }@inputs:
     {
@@ -44,9 +54,11 @@
             ];
 
           }
+          nixvim.nixosModules.nixvim
           ./configuration.nix
           ./nvidia.nix
           ./unfree.nix
+          ./nvim.nix
           # inputs.home-manager.nixosModules.default
         ];
       };
