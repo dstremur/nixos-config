@@ -35,6 +35,8 @@
 
       lualine.enable = true;
 
+      tiny-inline-diagnostic.enable = true;
+
       lsp = {
         enable = true;
         servers = {
