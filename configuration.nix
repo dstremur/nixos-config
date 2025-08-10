@@ -157,54 +157,55 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
+	aria2
+    unstable.bitbox
+    blender
+    btop-cuda
+    unstable.carapace
+    cpufetch
+    cudatoolkit
+    elan
+    ethtool
+    fastfetch
+    gcc
+    gdal
+    unstable.gh
+    gimp
+    git
+    gnome-tweaks
+    hashcat
+    htop
+    unstable.hugo
+    hunspell
+    iperf
+    kitty
+    lean4
+    libgcc
+    libreoffice-qt
+    lua-language-server
+    mailspring
+    mangohud
+    mprime
+    neofetch
+    unstable.nextcloud-client
+    nixfmt-rfc-style
+    unstable.nushell
+    kdePackages.okular
+    ookla-speedtest
+    orca-slicer
     pciutils
     pdal
-    cudatoolkit
-    qgis
-    htop
-    orca-slicer
-    ookla-speedtest
-    kdePackages.okular
-    unstable.hugo
-    texlive.combined.scheme-full
-    gdal
-    ripgrep
-    x265
-    libgcc
-    tree-sitter
-    gcc
-    gimp
-    blender
-    gnome-tweaks
-    aria2
-    iperf
-    libreoffice-qt
-    hunspell
-    vscode
-    git
-    ethtool
-    btop-cuda
-    neofetch
-    cpufetch
-    fastfetch
-    kitty
-    mprime
-    mailspring
-    trezor-suite
-    nixfmt-rfc-style
-    unstable.bitbox
-    mangohud
-    unstable.carapace
-    protonup
-    hashcat
-    thonny
-    unstable.gh
-    unstable.nushell
-    lua-language-server
     popsicle
-    lean4
-    elan
+    protonup
+    qgis
+    ripgrep
+    texlive.combined.scheme-full
+    thonny
+    tree-sitter
+    trezor-suite
+    vscode
+    wget
+    x265
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
