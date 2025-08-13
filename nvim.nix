@@ -37,6 +37,8 @@
 
       tiny-inline-diagnostic.enable = true;
 
+	  markdown-preview.enable = true;
+
       lsp = {
         enable = true;
         servers = {
