@@ -90,6 +90,13 @@
     gamescopeSession.enable = true;
   };
 
+  # Enable gnupg
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
   # Enable Gamemode
   programs.gamemode.enable = true;
 
@@ -157,7 +164,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-	aria2
+    aria2
     unstable.bitbox
     blender
     btop-cuda
@@ -194,6 +201,7 @@
     ookla-speedtest
     orca-slicer
     pciutils
+    pinentry
     pdal
     popsicle
     protonup
