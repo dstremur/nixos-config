@@ -50,14 +50,12 @@
   # Disable Wayland
   services.xserver.displayManager.gdm.wayland = false;
 
-
-   programs.hyprland = {
+  programs.hyprland = {
     # Install the packages from nixpkgs
     enable = true;
     # Whether to enable XWayland
     xwayland.enable = true;
   };
-
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -115,6 +113,10 @@
     package = pkgs.unstable.ollama;
     acceleration = "cuda";
   };
+
+  # Install Mullvad
+
+  services.mullvad-vpn.enable = true;
 
   # Install Flatpak
   services.flatpak.enable = true;
@@ -189,7 +191,7 @@
     gimp
     git
     gnome-tweaks
-    hashcat
+    unstable.hashcat
     htop
     unstable.hugo
     hunspell
@@ -202,6 +204,7 @@
     unstable.mailspring
     mangohud
     mprime
+    mullvad-vpn
     neofetch
     unstable.nextcloud-client
     nixfmt-rfc-style
