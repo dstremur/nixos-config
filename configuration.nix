@@ -205,6 +205,7 @@
     mangohud
     mprime
     mullvad-vpn
+    unstable.mfaktc
     neofetch
     unstable.nextcloud-client
     nixfmt-rfc-style
