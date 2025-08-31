@@ -151,7 +151,6 @@
     ];
     shell = pkgs.nushell;
     packages = with pkgs; [
-      thunderbird
       unstable.onedrive
       google-chrome
 
@@ -205,6 +204,7 @@
     mangohud
     mprime
     mullvad-vpn
+    musescore
     unstable.mfaktc
     neofetch
     unstable.nextcloud-client
