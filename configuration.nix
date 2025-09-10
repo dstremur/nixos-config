@@ -189,6 +189,7 @@
     fastfetch
     gcc
     gdal
+	gmic
     unstable.gh
     gimp
     git
@@ -197,6 +198,7 @@
     htop
     unstable.hugo
     hunspell
+	inkscape
     iperf
     kitty
     lean4
