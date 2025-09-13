@@ -189,7 +189,7 @@
     fastfetch
     gcc
     gdal
-	gmic
+    gmic
     unstable.gh
     gimp
     git
@@ -198,13 +198,14 @@
     htop
     unstable.hugo
     hunspell
-	inkscape
+    inkscape
     iperf
     kitty
     lean4
     libgcc
     libreoffice-qt
     lua-language-server
+    lutris
     unstable.mailspring
     mangohud
     mprime
@@ -229,7 +230,9 @@
     thonny
     tree-sitter
     trezor-suite
+    vlc
     vscode
+    wine64
     wget
     x265
   ];
