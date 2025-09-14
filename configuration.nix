@@ -201,9 +201,11 @@
     inkscape
     iperf
     kitty
+    kdePackages.kleopatra
     lean4
     libgcc
     libreoffice-qt
+    lilypond-with-fonts
     lua-language-server
     lutris
     unstable.mailspring
@@ -218,10 +220,12 @@
     unstable.nushell
     kdePackages.okular
     ookla-speedtest
+    openconnect
     orca-slicer
     pciutils
     pinentry
     pdal
+    poppler
     popsicle
     protonup
     qgis
