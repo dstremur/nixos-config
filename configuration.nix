@@ -218,6 +218,7 @@
     neofetch
     unstable.nextcloud-client
     nixfmt-rfc-style
+	nix-tree
     unstable.nushell
     kdePackages.okular
     ookla-speedtest
