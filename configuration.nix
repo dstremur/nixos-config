@@ -152,7 +152,7 @@
     shell = pkgs.nushell;
     packages = with pkgs; [
       unstable.onedrive
-      google-chrome
+      unstable.google-chrome
 
     ];
   };
@@ -200,6 +200,7 @@
     hunspell
     inkscape
     iperf
+    jetbrains.idea-community-bin
     kitty
     kdePackages.kleopatra
     lean4
@@ -230,6 +231,7 @@
     protonup
     qgis
     ripgrep
+    temurin-bin
     texlive.combined.scheme-full
     thonny
     tree-sitter
