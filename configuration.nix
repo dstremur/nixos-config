@@ -187,6 +187,7 @@
     elan
     ethtool
     fastfetch
+    filezilla
     gcc
     gdal
     gmic
@@ -218,7 +219,7 @@
     neofetch
     unstable.nextcloud-client
     nixfmt-rfc-style
-	nix-tree
+    nix-tree
     unstable.nushell
     kdePackages.okular
     ookla-speedtest
