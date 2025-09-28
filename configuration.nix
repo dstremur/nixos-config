@@ -216,6 +216,7 @@
     mullvad-vpn
     musescore
     unstable.mfaktc
+    nasm
     neofetch
     unstable.nextcloud-client
     nixfmt-rfc-style
