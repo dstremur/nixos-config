@@ -114,6 +114,7 @@
     acceleration = "cuda";
   };
 
+
   # Install Mullvad
 
   services.mullvad-vpn.enable = true;
@@ -183,7 +184,6 @@
     btop-cuda
     unstable.carapace
     cpufetch
-    cudatoolkit
     elan
     ethtool
     fastfetch
