@@ -114,7 +114,6 @@
     acceleration = "cuda";
   };
 
-
   # Install Mullvad
 
   services.mullvad-vpn.enable = true;
@@ -153,7 +152,7 @@
     shell = pkgs.nushell;
     packages = with pkgs; [
       unstable.onedrive
-      unstable.google-chrome
+      google-chrome
 
     ];
   };
@@ -209,7 +208,7 @@
     libreoffice-qt
     lilypond-with-fonts
     lua-language-server
-    lutris
+    unstable.lutris
     unstable.mailspring
     mangohud
     mprime
