@@ -47,7 +47,7 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  # Disable Wayland
+  # Enable Wayland
   services.xserver.displayManager.gdm.wayland = true;
 
   programs.hyprland = {
@@ -80,6 +80,7 @@
   hardware.graphics = {
     enable = true;
   };
+
 
   # Cuda Cache
   nix.settings.substituters = [
@@ -230,11 +231,13 @@
     pdal
     poppler
     popsicle
+	prismlauncher
     protonup
     qgis
     ripgrep
     temurin-bin
     texlive.combined.scheme-full
+	tex-fmt
     thonny
     tree-sitter
     trezor-suite
@@ -243,6 +246,7 @@
     wine64
     wget
     x265
+	xournalpp
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
