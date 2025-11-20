@@ -51,7 +51,7 @@
                   inherit prev;
                   system = prev.system;
                   config.allowUnfree = true;
-				  config.cudaSupport = true;
+                  config.cudaSupport = true;
                 };
               })
             ];

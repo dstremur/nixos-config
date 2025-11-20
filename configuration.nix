@@ -34,6 +34,8 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  environment.variables.LIBVA_DRIVER_NAME = "nvidia";
+
   # Set your time zone.
   time.timeZone = "Europe/Zurich";
 
@@ -80,7 +82,6 @@
   hardware.graphics = {
     enable = true;
   };
-
 
   # Cuda Cache
   nix.settings.substituters = [
@@ -195,6 +196,7 @@
     gimp
     git
     gnome-tweaks
+    gparted
     unstable.hashcat
     htop
     unstable.hugo
@@ -226,18 +228,20 @@
     ookla-speedtest
     openconnect
     orca-slicer
+    oterm
     pciutils
     pinentry
     pdal
     poppler
     popsicle
-	prismlauncher
+    prismlauncher
     protonup
     qgis
     ripgrep
+    sage
     temurin-bin
     texlive.combined.scheme-full
-	tex-fmt
+    tex-fmt
     thonny
     tree-sitter
     trezor-suite
@@ -246,7 +250,18 @@
     wine64
     wget
     x265
-	xournalpp
+    xournalpp
+    libva-vdpau-driver
+    libvdpau-va-gl
+    libva-utils
+    mesa
+    (chromium.override {
+      commandLineArgs = [
+        "--enable-features=AcceleratedVideoEncoder"
+        "--ignore-gpu-blocklist"
+        "--enable-zero-copy"
+      ];
+    })
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

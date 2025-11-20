@@ -41,6 +41,17 @@
     ];
   };
 
+  fileSystems."/mnt/GameDisk" = {
+    device = "/dev/disk/by-uuid/d8967737-e4cd-4996-9304-293511d4dd6a";
+    fsType = "ext4";
+  };
+
+  fileSystems."/mnt/data2" = {
+    device = "/dev/disk/by-uuid/c65d401a-e118-40f8-83f8-e37d88f78d52";
+    fsType = "ext4";
+
+  };
+
   swapDevices = [
     { device = "/dev/disk/by-uuid/7ae41a92-b5d9-4a26-a5b6-0676132f754b"; }
   ];
