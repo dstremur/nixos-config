@@ -121,18 +121,18 @@
   };
 
   services.open-webui = {
-  	enable = true;
-	package = pkgs.unstable.open-webui;
-	port = 9000;
-	host = "127.0.0.1";
-	environment = {
-    ANONYMIZED_TELEMETRY = "False";
-    DO_NOT_TRACK = "True";
-    SCARF_NO_ANALYTICS = "True";
-    OLLAMA_API_BASE_URL = "http://127.0.0.1:11434/api";
-    OLLAMA_BASE_URL = "http://127.0.0.1:11434";
+    enable = true;
+    package = pkgs.unstable.open-webui;
+    port = 9000;
+    host = "127.0.0.1";
+    environment = {
+      ANONYMIZED_TELEMETRY = "False";
+      DO_NOT_TRACK = "True";
+      SCARF_NO_ANALYTICS = "True";
+      OLLAMA_API_BASE_URL = "http://127.0.0.1:11434/api";
+      OLLAMA_BASE_URL = "http://127.0.0.1:11434";
+    };
   };
-};
   # Install Mullvad
 
   services.mullvad-vpn.enable = true;
