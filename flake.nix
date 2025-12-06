@@ -13,7 +13,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # home-manager = {
     #   url = "github:nix-community/home-manager";
@@ -23,11 +23,11 @@
   };
 
   inputs.nixvim = {
-    url = "github:nix-community/nixvim";
+    #url = "github:nix-community/nixvim";
     # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-    # url = "github:nix-community/nixvim/nixos-25.05";
+    url = "github:nix-community/nixvim/nixos-25.11";
 
-    inputs.nixpkgs.follows = "nixpkgs-unstable";
+    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -46,16 +46,36 @@
         modules = [
           {
             nixpkgs.overlays = [
-              (final: prev: {
-                unstable = import nixpkgs-unstable {
-                  inherit prev;
-                  system = prev.system;
-                  config.allowUnfree = true;
-                  config.cudaSupport = true;
-                };
-              })
-            ];
+              (
+                final: prev:
+                let
+                  # Import unstable
+                  unstable = import nixpkgs-unstable {
+                    inherit (prev) system;
+                    config.allowUnfree = true;
+                    config.cudaSupport = false;
+                  };
 
+                  # Override unstable.bambu-studio
+                  unstablePatched = unstable // {
+                    bambu-studio = unstable.bambu-studio.overrideAttrs (old: {
+                      cmakeFlags = (old.cmakeFlags or [ ]) ++ [
+                        "-DWITH_CUDA=ON"
+                      ];
+
+                      buildInputs = (old.buildInputs or [ ]) ++ [
+                        prev.cudatoolkit
+                        prev.cudaPackages.cudnn
+                      ];
+                    });
+                  };
+                in
+                {
+                  # expose it to your entire system as pkgs.unstable
+                  unstable = unstablePatched;
+                }
+              )
+            ];
           }
           nixvim.nixosModules.nixvim
           ./configuration.nix

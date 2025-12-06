@@ -50,7 +50,6 @@
           tailwindcss.enable = true;
           markdown_oxide.enable = true;
           pylsp.enable = true;
-          leanls.enable = true;
 
         };
       };

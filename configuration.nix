@@ -46,11 +46,11 @@
   # services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   # Enable Wayland
-  services.xserver.displayManager.gdm.wayland = true;
+  services.displayManager.gdm.wayland = true;
 
   programs.hyprland = {
     # Install the packages from nixpkgs
@@ -116,6 +116,23 @@
     acceleration = "cuda";
   };
 
+  systemd.services.ollama.serviceConfig = {
+    Environment = [ "OLLAMA_HOST=0.0.0.0:11434" ];
+  };
+
+  services.open-webui = {
+  	enable = true;
+	package = pkgs.unstable.open-webui;
+	port = 9000;
+	host = "127.0.0.1";
+	environment = {
+    ANONYMIZED_TELEMETRY = "False";
+    DO_NOT_TRACK = "True";
+    SCARF_NO_ANALYTICS = "True";
+    OLLAMA_API_BASE_URL = "http://127.0.0.1:11434/api";
+    OLLAMA_BASE_URL = "http://127.0.0.1:11434";
+  };
+};
   # Install Mullvad
 
   services.mullvad-vpn.enable = true;
@@ -180,6 +197,7 @@
   environment.systemPackages = with pkgs; [
     # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     aria2
+    unstable.bambu-studio
     unstable.bitbox
     blender
     btop-cuda
@@ -209,6 +227,7 @@
     lean4
     libgcc
     libreoffice-qt
+    librechat
     lilypond-with-fonts
     lua-language-server
     unstable.lutris
@@ -227,24 +246,26 @@
     kdePackages.okular
     ookla-speedtest
     openconnect
-    orca-slicer
+    unstable.orca-slicer
     oterm
     pciutils
-    pinentry
+    pinentry-gnome3
     pdal
     poppler
     popsicle
     prismlauncher
-    protonup
+    #	prmers
+    protonup-ng
     qgis
     ripgrep
-    sage
+    #sage
     temurin-bin
     texlive.combined.scheme-full
     tex-fmt
     thonny
     tree-sitter
     trezor-suite
+    vim
     vlc
     vscode
     wine64
@@ -263,6 +284,10 @@
       ];
     })
   ];
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    prmers = pkgs.callPackage /home/dstrebel/Github/nixpkgs/pkgs/by-name/pr/prmers/package.nix { };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
