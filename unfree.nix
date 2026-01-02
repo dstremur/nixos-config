@@ -63,5 +63,8 @@
 
       "open-webui"
 
+      "vscode-with-extensions"
+      "vscode-extension-ms-vscode-cpptools"
+
     ];
 }

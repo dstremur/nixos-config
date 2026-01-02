@@ -23,9 +23,13 @@
     "sd_mod"
     "sr_mod"
   ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "nvme" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  boot.kernelParams = [
+    "nvme_core.default_ps_max_latency_us=0"
+  ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/1be112d2-43ca-4118-b5a4-06f14610cfb1";

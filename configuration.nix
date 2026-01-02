@@ -70,7 +70,11 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip ];
+  services.printing.drivers = [
+    pkgs.hplip
+    pkgs.cups-filters
+    pkgs.cups-browsed
+  ];
 
   services.avahi = {
     enable = true;
@@ -84,10 +88,10 @@
   };
 
   # Cuda Cache
-  nix.settings.substituters = [
-    "https://cuda-maintainers.cachix.org"
-  ];
-
+  nix.settings = {
+    substituters = [ "https://cache.nixos-cuda.org" ];
+    trusted-public-keys = [ "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M=" ];
+  };
   # Enable SSD fstrim
 
   services.fstrim.enable = true;
@@ -98,6 +102,9 @@
     enable = true;
     gamescopeSession.enable = true;
   };
+
+  # enable fwupd
+  services.fwupd.enable = true;
 
   # Enable gnupg
 
@@ -112,7 +119,7 @@
   # Ollama
   services.ollama = {
     enable = true;
-    package = pkgs.unstable.ollama;
+    package = pkgs.unstable.ollama-cuda;
     acceleration = "cuda";
   };
 
@@ -180,7 +187,7 @@
   environment.shells = with pkgs; [ nushell ];
 
   # Install firefox.
-  # programs.firefox.enable = true;
+  programs.firefox.enable = true;
 
   # Allow unfree packages
   #  nixpkgs.config.allowUnfree = true;
@@ -200,7 +207,9 @@
     unstable.bambu-studio
     unstable.bitbox
     blender
+    bottles
     btop-cuda
+    cabal-install
     unstable.carapace
     cpufetch
     elan
@@ -213,8 +222,10 @@
     unstable.gh
     gimp
     git
+    ghc
     gnome-tweaks
     gparted
+    haskell-language-server
     unstable.hashcat
     htop
     unstable.hugo
@@ -224,6 +235,7 @@
     jetbrains.idea-community-bin
     kitty
     kdePackages.kleopatra
+    ltex-ls
     lean4
     libgcc
     libreoffice-qt
@@ -248,17 +260,18 @@
     openconnect
     unstable.orca-slicer
     oterm
+    pandoc
     pciutils
     pinentry-gnome3
     pdal
     poppler
     popsicle
     prismlauncher
-    #	prmers
+    unstable.prmers
     protonup-ng
     qgis
     ripgrep
-    #sage
+    sage
     temurin-bin
     texlive.combined.scheme-full
     tex-fmt
@@ -268,6 +281,7 @@
     vim
     vlc
     vscode
+    winetricks
     wine64
     wget
     x265
@@ -276,18 +290,7 @@
     libvdpau-va-gl
     libva-utils
     mesa
-    (chromium.override {
-      commandLineArgs = [
-        "--enable-features=AcceleratedVideoEncoder"
-        "--ignore-gpu-blocklist"
-        "--enable-zero-copy"
-      ];
-    })
   ];
-
-  nixpkgs.config.packageOverrides = pkgs: {
-    prmers = pkgs.callPackage /home/dstrebel/Github/nixpkgs/pkgs/by-name/pr/prmers/package.nix { };
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
