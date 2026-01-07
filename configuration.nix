@@ -24,6 +24,9 @@
     "flakes"
   ];
 
+  nix.settings.trusted-users = [ "root" "dstrebel" ];
+	
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -75,6 +78,7 @@
     pkgs.cups-filters
     pkgs.cups-browsed
   ];
+  services.printing.package =pkgs.cups;
 
   services.avahi = {
     enable = true;
@@ -129,7 +133,7 @@
 
   services.open-webui = {
     enable = true;
-    package = pkgs.unstable.open-webui;
+    package = pkgs.open-webui;
     port = 9000;
     host = "127.0.0.1";
     environment = {
@@ -178,7 +182,7 @@
     shell = pkgs.nushell;
     packages = with pkgs; [
       unstable.onedrive
-      google-chrome
+      unstable.google-chrome
 
     ];
   };
@@ -212,6 +216,7 @@
     cabal-install
     unstable.carapace
     cpufetch
+	unstable.cups
     elan
     ethtool
     fastfetch
@@ -232,7 +237,7 @@
     hunspell
     inkscape
     iperf
-    jetbrains.idea-community-bin
+	jetbrains.idea-oss
     kitty
     kdePackages.kleopatra
     ltex-ls
@@ -282,7 +287,7 @@
     vlc
     vscode
     winetricks
-    wine64
+    wineWowPackages.full
     wget
     x265
     xournalpp

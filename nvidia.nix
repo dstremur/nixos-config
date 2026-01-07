@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  unstable,
   ...
 }:
 {
@@ -36,7 +37,7 @@
     # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
-    package = (pkgs.unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.beta;
+    package = (unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.beta;
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     #package = config.boot.kernelPackages.nvidiaPackages.beta;
     #package = config.boot.kernelPackages.nvidiaPackages.mkDriver {

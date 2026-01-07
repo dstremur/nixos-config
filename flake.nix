@@ -14,7 +14,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     # home-manager = {
     #   url = "github:nix-community/home-manager";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -38,46 +38,38 @@
       nixvim,
       ...
     }@inputs:
+	let 
+	system = "x86_64-linux";
+	unstable = import nixpkgs-unstable {
+	inherit system;
+	config.allowUnfree = true;
+	config.cudaSupport = false;
+};
+	in
     {
       # use "nixos", or your hostname as the name of the configuration
       # it's a better practice than "default" shown in the video
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
+	  inherit system;
+        specialArgs = { inherit inputs unstable; };
         modules = [
-          {
-            nixpkgs.overlays = [
-              (
-                final: prev:
-                let
-                  # Import unstable
-                  unstable = import nixpkgs-unstable {
-                    inherit (prev) system;
-                    config.allowUnfree = true;
-                    config.cudaSupport = false;
-                  };
+		({ ... }: {
+		nixpkgs.overlays = [
+            (final: prev: {
+              unstable = unstable;              
+              bambu-studio-cuda = unstable.bambu-studio.overrideAttrs (old: {
+                cmakeFlags = (old.cmakeFlags or [ ]) ++ [ "-DWITH_CUDA=ON" ];
+                buildInputs = (old.buildInputs or [ ]) ++ [
+                  unstable.cudaPackages.cudatoolkit
+                  unstable.cudaPackages.cudnn
+                ];
+              });
+            })
+          ];
 
-                  # Override unstable.bambu-studio
-                  unstablePatched = unstable // {
-                    bambu-studio = unstable.bambu-studio.overrideAttrs (old: {
-                      cmakeFlags = (old.cmakeFlags or [ ]) ++ [
-                        "-DWITH_CUDA=ON"
-                      ];
+})
 
-                      buildInputs = (old.buildInputs or [ ]) ++ [
-                        prev.cudatoolkit
-                        prev.cudaPackages.cudnn
-                      ];
-                    });
-                  };
-                in
-                {
-                  # expose it to your entire system as pkgs.unstable
-                  unstable = unstablePatched;
-                }
-              )
-            ];
-          }
-          nixvim.nixosModules.nixvim
+nixvim.nixosModules.nixvim
           ./configuration.nix
           ./nvidia.nix
           ./unfree.nix
