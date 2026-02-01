@@ -19,13 +19,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
+  nix.settings.trusted-users = [
+    "root"
+    "dstrebel"
   ];
-
-  nix.settings.trusted-users = [ "root" "dstrebel" ];
-	
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -73,12 +70,13 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = [
-    pkgs.hplip
-    pkgs.cups-filters
-    pkgs.cups-browsed
+  services.printing.drivers = with pkgs.unstable; [
+    hplip
+    cups-filters
+    cups-browsed
   ];
-  services.printing.package =pkgs.cups;
+
+  services.printing.package = pkgs.unstable.cups;
 
   services.avahi = {
     enable = true;
@@ -93,6 +91,10 @@
 
   # Cuda Cache
   nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     substituters = [ "https://cache.nixos-cuda.org" ];
     trusted-public-keys = [ "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M=" ];
   };
@@ -133,7 +135,7 @@
 
   services.open-webui = {
     enable = true;
-    package = pkgs.open-webui;
+    package = pkgs.unstable.open-webui;
     port = 9000;
     host = "127.0.0.1";
     environment = {
@@ -182,7 +184,7 @@
     shell = pkgs.nushell;
     packages = with pkgs; [
       unstable.onedrive
-      unstable.google-chrome
+      google-chrome
 
     ];
   };
@@ -216,7 +218,7 @@
     cabal-install
     unstable.carapace
     cpufetch
-	unstable.cups
+    unstable.cups
     elan
     ethtool
     fastfetch
@@ -237,7 +239,7 @@
     hunspell
     inkscape
     iperf
-	jetbrains.idea-oss
+    jetbrains.idea-oss
     kitty
     kdePackages.kleopatra
     ltex-ls
@@ -277,6 +279,7 @@
     qgis
     ripgrep
     sage
+    smartmontools
     temurin-bin
     texlive.combined.scheme-full
     tex-fmt
