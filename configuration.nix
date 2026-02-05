@@ -65,6 +65,9 @@
     variant = "";
   };
 
+   hardware.logitech.wireless.enable = true;
+   hardware.logitech.wireless.enableGraphical = true;
+
   # Configure console keymap
   console.keyMap = "sg";
 
@@ -293,6 +296,7 @@
     wineWowPackages.full
     wget
     x265
+	unstable.xenia-canary
     xournalpp
     libva-vdpau-driver
     libvdpau-va-gl
