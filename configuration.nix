@@ -24,6 +24,15 @@
     "dstrebel"
   ];
 
+  boot.kernelParams = [
+    "pcie_aspm=off"
+    "iommu=pt"
+    "amd_iommu=on"
+    "pci=noaer"
+  ];
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -65,8 +74,8 @@
     variant = "";
   };
 
-   hardware.logitech.wireless.enable = true;
-   hardware.logitech.wireless.enableGraphical = true;
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true;
 
   # Configure console keymap
   console.keyMap = "sg";
@@ -101,22 +110,20 @@
     substituters = [ "https://cache.nixos-cuda.org" ];
     trusted-public-keys = [ "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M=" ];
   };
-  # Enable SSD fstrim
 
+  # Enable SSD fstrim
   services.fstrim.enable = true;
 
   # Steam
-
   programs.steam = {
     enable = true;
     gamescopeSession.enable = true;
   };
 
-  # enable fwupd
+  # Enable fwupd
   services.fwupd.enable = true;
 
   # Enable gnupg
-
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
@@ -192,17 +199,13 @@
     ];
   };
 
-  # add Nushell to environment
+  # Add Nushell to environment
   environment.shells = with pkgs; [ nushell ];
 
   # Install firefox.
   programs.firefox.enable = true;
 
-  # Allow unfree packages
-  #  nixpkgs.config.allowUnfree = true;
-
   # Fonts
-
   fonts.packages = with pkgs; [
     fira-code
     comic-mono
@@ -220,6 +223,7 @@
     btop-cuda
     cabal-install
     unstable.carapace
+    cmake
     cpufetch
     unstable.cups
     elan
@@ -250,6 +254,7 @@
     libgcc
     libreoffice-qt
     librechat
+    llama-cpp
     lilypond-with-fonts
     lua-language-server
     unstable.lutris
@@ -259,6 +264,7 @@
     mullvad-vpn
     musescore
     unstable.mfaktc
+    mstflint
     nasm
     neofetch
     unstable.nextcloud-client
@@ -281,6 +287,7 @@
     protonup-ng
     qgis
     ripgrep
+    rdma-core
     sage
     smartmontools
     temurin-bin
@@ -296,7 +303,7 @@
     wineWowPackages.full
     wget
     x265
-	unstable.xenia-canary
+    unstable.xenia-canary
     xournalpp
     libva-vdpau-driver
     libvdpau-va-gl

@@ -45,6 +45,11 @@
         config.allowUnfree = true;
         config.cudaSupport = false;
       };
+      unstable-cuda = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+        config.cudaSupport = true;
+      };
     in
     {
       # use "nixos", or your hostname as the name of the configuration
@@ -66,6 +71,11 @@
                       unstable.cudaPackages.cudnn
                     ];
                   });
+                })
+                (final: prev: {
+                  llama-cpp = unstable-cuda.llama-cpp.override {
+                    cudaSupport = true;
+                  };
                 })
               ];
 

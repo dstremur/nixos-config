@@ -40,6 +40,8 @@
       "libcusparse"
       "libnpp"
 
+      "llama-cpp"
+
       "triton"
       "torch"
       "cudnn"
