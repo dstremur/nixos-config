@@ -24,13 +24,6 @@
     "dstrebel"
   ];
 
-  boot.kernelParams = [
-    "pcie_aspm=off"
-    "iommu=pt"
-    "amd_iommu=on"
-    "pci=noaer"
-  ];
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos"; # Define your hostname.

@@ -18,7 +18,6 @@
     "nvme"
     "xhci_pci"
     "ahci"
-    "usb_storage"
     "usbhid"
     "sd_mod"
     "sr_mod"
@@ -30,6 +29,12 @@
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/6de912af-fa9b-497a-af79-507c1724266e";
     fsType = "ext4";
+  };
+
+  fileSystems."/nix/store" = {
+    device = "/nix/store";
+    fsType = "none";
+    options = [ "bind" ];
   };
 
   fileSystems."/boot" = {
