@@ -51,6 +51,23 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  # Fix login bug https://discourse.nixos.org/t/multi-monitor-gdm-help/60348
+  systemd.services.copyGdmMonitorsXml = {
+    description = "Copy monitors.xml to GDM config";
+    after = [
+      "network.target"
+      "systemd-user-sessions.service"
+      "display-manager.service"
+    ];
+
+    serviceConfig = {
+      ExecStart = "${pkgs.bash}/bin/bash -c 'echo \"Running copyGdmMonitorsXml service\" && mkdir -p /run/gdm/.config && echo \"Created /run/gdm/.config directory\" && [ \"/home/dstrebel/.config/monitors.xml\" -ef \"/run/gdm/.config/monitors.xml\" ] || cp /home/dstrebel/.config/monitors.xml /run/gdm/.config/monitors.xml && echo \"Copied monitors.xml to /run/gdm/.config/monitors.xml\" && chown gdm:gdm /run/gdm/.config/monitors.xml && echo \"Changed ownership of monitors.xml to gdm\"'";
+      Type = "oneshot";
+    };
+
+    wantedBy = [ "multi-user.target" ];
+  };
+
   # Enable Wayland
   services.displayManager.gdm.wayland = true;
 
@@ -210,7 +227,9 @@
     # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     aria2
     unstable.bambu-studio
+    bc
     unstable.bitbox
+    bison
     blender
     bottles
     btop-cuda
@@ -218,14 +237,19 @@
     unstable.carapace
     cmake
     cpufetch
+    cpio
     unstable.cups
+    ctags
+    elfutils
     elan
     ethtool
     fastfetch
     filezilla
+    flex
     gcc
     gdal
     gmic
+    gnumake
     unstable.gh
     gimp
     git
@@ -244,9 +268,11 @@
     kdePackages.kleopatra
     ltex-ls
     lean4
+    libelf
     libgcc
     libreoffice-qt
     librechat
+    libressl
     llama-cpp
     lilypond-with-fonts
     lua-language-server
@@ -271,6 +297,7 @@
     oterm
     pandoc
     pciutils
+    perl
     pinentry-gnome3
     pdal
     poppler
