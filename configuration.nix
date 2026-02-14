@@ -117,7 +117,10 @@
       "nix-command"
       "flakes"
     ];
-    substituters = [ "https://cache.nixos-cuda.org" ];
+    substituters = [
+      "https://cache.nixos-cuda.org"
+      "https://aseipp-nix-cache.global.ssl.fastly.net"
+    ];
     trusted-public-keys = [ "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M=" ];
   };
 
@@ -240,6 +243,7 @@
     cpio
     unstable.cups
     ctags
+    delta
     elfutils
     elan
     ethtool
@@ -282,6 +286,7 @@
     mprime
     mullvad-vpn
     musescore
+    mutt
     unstable.mfaktc
     mstflint
     nasm
@@ -330,6 +335,43 @@
     libva-utils
     mesa
   ];
+
+  nix.buildMachines = [
+    {
+      # Will be used to call "ssh builder" to connect to the builder machine.
+      # The details of the connection (user, port, url etc.)
+      # are taken from your "~/.ssh/config" file.
+      hostName = "dstrebel-ai?ssh-key=/home/dstrebel/.ssh/id_ed25519";
+      # CPU architecture of the builder, and the operating system it runs.
+      # Replace the line by the architecture of your builder, e.g.
+      # - Normal Intel/AMD CPUs use "x86_64-linux"
+      # - Raspberry Pi 4 and 5 use  "aarch64-linux"
+      # - M1, M2, M3 ARM Macs use   "aarch64-darwin"
+      # - Newer RISCV computers use "riscv64-linux"
+      # See https://github.com/NixOS/nixpkgs/blob/nixos-unstable/lib/systems/flake-systems.nix
+      # If your builder supports multiple architectures
+      # (e.g. search for "binfmt" for emulation),
+      # you can list them all, e.g. replace with
+      # systems = ["x86_64-linux" "aarch64-linux" "riscv64-linux"];
+      system = "x86_64-linux";
+      # Nix custom ssh-variant that avoids lots of "trusted-users" settings pain
+      protocol = "ssh-ng";
+      # default is 1 but may keep the builder idle in between builds
+      maxJobs = 40;
+      # how fast is the builder compared to your local machine
+      speedFactor = 1;
+      supportedFeatures = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+      ];
+      mandatoryFeatures = [ ];
+    }
+  ];
+  # required, otherwise remote buildMachines above aren't used
+  nix.distributedBuilds = true;
+  # optional, useful when the builder has a faster internet connection than yours
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
