@@ -287,7 +287,7 @@
     nasm
     neofetch
     unstable.nextcloud-client
-    nixfmt-rfc-style
+    nixfmt
     nix-tree
     unstable.nushell
     kdePackages.okular
