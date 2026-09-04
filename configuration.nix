@@ -6,6 +6,7 @@
   config,
   pkgs,
   lib,
+  master,
   ...
 }:
 
@@ -24,6 +25,11 @@
     "dstrebel"
   ];
 
+  boot.kernelParams = [
+    "pci=realloc"
+    "pci=assign-busses"
+  ];
+
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -35,6 +41,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  networking.networkmanager.plugins = [ pkgs.networkmanager-openconnect ];
 
   environment.variables.LIBVA_DRIVER_NAME = "nvidia";
 
@@ -67,9 +75,6 @@
 
     wantedBy = [ "multi-user.target" ];
   };
-
-  # Enable Wayland
-  services.displayManager.gdm.wayland = true;
 
   programs.hyprland = {
     # Install the packages from nixpkgs
@@ -111,6 +116,11 @@
     enable = true;
   };
 
+  services.syncthing = {
+    enable = true;
+    openDefaultPorts = true; # Open ports in the firewall for Syncthing. (NOTE: this will not open syncthing gui port)
+  };
+
   # Cuda Cache
   nix.settings = {
     experimental-features = [
@@ -147,9 +157,8 @@
 
   # Ollama
   services.ollama = {
-    enable = true;
+    enable = false;
     package = pkgs.unstable.ollama-cuda;
-    acceleration = "cuda";
   };
 
   systemd.services.ollama.serviceConfig = {
@@ -212,6 +221,19 @@
     ];
   };
 
+  # enable wayland globally for slack
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
+    };
+  };
+
   # Add Nushell to environment
   environment.shells = with pkgs; [ nushell ];
 
@@ -224,20 +246,55 @@
     comic-mono
   ];
 
+  # disable openblas tests
+  nixpkgs.overlays = [
+    (final: prev: {
+      openblas = prev.openblas.overrideAttrs (_: {
+        doCheck = false;
+      });
+      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+        (pythonFinal: pythonPrev: {
+          django = pythonPrev.django.overrideAttrs (oldAttrs: {
+            doCheck = false;
+            doInstallCheck = false;
+          });
+        })
+      ];
+    })
+    (final: prev: {
+      arrow-cpp = prev.arrow-cpp.overrideAttrs (oldAttrs: {
+        doCheck = false;
+      });
+    })
+    (final: prev: {
+      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+        (python-final: python-prev: {
+          pycurl = python-prev.pycurl.overridePythonAttrs (oldAttrs: {
+            doCheck = false;
+          });
+        })
+      ];
+    })
+  ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     aria2
-    unstable.bambu-studio
+    (bambu-studio.override {
+      withNvidiaGLWorkaround = true;
+    })
     bc
     unstable.bitbox
     bison
-    blender
-    bottles
+    #blender
+    #bottles
     btop-cuda
     cabal-install
     unstable.carapace
+    clang
+    clang-tools
+    cloc
     cmake
     cpufetch
     cpio
@@ -251,23 +308,30 @@
     filezilla
     flex
     gcc
-    gdal
+    gdb
+    #gdal
+    gmp
+    gnomeExtensions.gtile
+    unstable.genefer
     gmic
     gnumake
     unstable.gh
     gimp
+    unstable.gmp
     git
     ghc
     gnome-tweaks
     gparted
+    gpufetch
     haskell-language-server
     unstable.hashcat
     htop
     unstable.hugo
+    quartus-prime-lite
     hunspell
     inkscape
     iperf
-    jetbrains.idea-oss
+    jetbrains.idea
     kitty
     kdePackages.kleopatra
     ltex-ls
@@ -275,57 +339,67 @@
     libelf
     libgcc
     libreoffice-qt
-    librechat
     libressl
     llama-cpp
     lilypond-with-fonts
+    llvmPackages_latest.llvm
+    unstable.llr
+    unstable.llrCUDA
     lua-language-server
-    unstable.lutris
-    unstable.mailspring
+    lutris
+    #unstable.mailspring
     mangohud
-    mprime
+    mars-mips
+    unstable.mlucas
+    unstable.mprime
+    unstable.mfakto
     mullvad-vpn
-    musescore
+    unstable.musescore
     mutt
     unstable.mfaktc
     mstflint
     nasm
-    neofetch
+    nvtopPackages.full
     unstable.nextcloud-client
     nixfmt
     nix-tree
     unstable.nushell
     kdePackages.okular
+    kdePackages.kcachegrind
     ookla-speedtest
+    unstable.opencode
     openconnect
     unstable.orca-slicer
-    oterm
+    # oterm
     pandoc
     pciutils
+    perf
     perl
     pinentry-gnome3
-    pdal
+    # pdal
     poppler
     popsicle
     prismlauncher
     unstable.prmers
+    unstable.prpll
     protonup-ng
-    qgis
+    # qgis
     ripgrep
     rdma-core
-    sage
+    #sage
     smartmontools
+    unstable.slack
     temurin-bin
     texlive.combined.scheme-full
     tex-fmt
-    thonny
     tree-sitter
     trezor-suite
+    unstable.valgrind
     vim
     vlc
-    vscode
+    unstable.vscode
     winetricks
-    wineWowPackages.full
+    unstable.wineWow64Packages.full
     wget
     x265
     unstable.xenia-canary
@@ -333,6 +407,7 @@
     libva-vdpau-driver
     libvdpau-va-gl
     libva-utils
+    # yubioath-flutter
     mesa
   ];
 

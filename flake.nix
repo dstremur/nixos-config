@@ -13,8 +13,9 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
     # home-manager = {
     #   url = "github:nix-community/home-manager";
     #   inputs.nixpkgs.follows = "nixpkgs";
@@ -25,9 +26,8 @@
   inputs.nixvim = {
     #url = "github:nix-community/nixvim";
     # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-    url = "github:nix-community/nixvim/nixos-25.11";
+    url = "github:nix-community/nixvim/nixos-26.05";
 
-    inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -35,6 +35,7 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
+      nixpkgs-master,
       nixvim,
       ...
     }@inputs:
@@ -44,6 +45,11 @@
         inherit system;
         config.allowUnfree = true;
         config.cudaSupport = false;
+      };
+      master = import nixpkgs-master {
+        inherit system;
+        config.allowUnfree = true;
+        config.cudaSupport = true;
       };
       unstable-cuda = import nixpkgs-unstable {
         inherit system;
@@ -56,7 +62,7 @@
       # it's a better practice than "default" shown in the video
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs unstable; };
+        specialArgs = { inherit inputs unstable master; };
         modules = [
           (
             { ... }:

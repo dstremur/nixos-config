@@ -17,6 +17,8 @@
       "nvidia-x11"
       "nvidia-settings"
 
+      "idea"
+
       "libcublas"
       "cuda_cccl"
       "cuda_nvcc"
@@ -39,7 +41,7 @@
       "libnvjitlink"
       "libcusparse"
       "libnpp"
-
+      "quartus-prime-lite"
       "llama-cpp"
 
       "triton"
@@ -47,7 +49,7 @@
       "cudnn"
       "libcusparse_lt"
       "libcufile"
-
+      "quartus-prime-lite-unwrapped"
       "ookla-speedtest"
 
       "vscode"
@@ -64,6 +66,8 @@
       "blender"
 
       "open-webui"
+
+      "bambu-studio"
 
       "vscode-with-extensions"
       "vscode-extension-ms-vscode-cpptools"

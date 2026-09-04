@@ -19,7 +19,7 @@
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
-    powerManagement.enable = false;
+    powerManagement.enable = true;
 
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
@@ -37,30 +37,18 @@
     # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
-    package =
-      let
-        base = (unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.beta;
-        patch = pkgs.fetchpatch {
-          url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/master/nvidia/nvidia-utils/kernel-6.19.patch";
-          sha256 = "sha256-YuJjSUXE6jYSuZySYGnWSNG5sfVei7vvxDcHx3K+IN4=";
-        };
-      in
-      base
-      // {
-        open = base.open.overrideAttrs (oldAttrs: {
-          patches = (oldAttrs.patches or [ ]) ++ [ patch ];
-        });
-      };
+    package = (unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.new_feature;
+    #package = config.boot.kernelPackages.nvidiaPackages.latest;
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    #package = config.boot.kernelPackages.nvidiaPackages.beta;
-    #package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    #  version = "580.82.09";
-    #  sha256_64bit = "sha256-Puz4MtouFeDgmsNMKdLHoDgDGC+QRXh6NVysvltWlbc=";
-    #  sha256_aarch64 = "sha256-YB+mQD+oEDIIDa+e8KX1/qOlQvZMNKFrI5z3CoVKUjs=";
-    #  openSha256 = "sha256-YB+mQD+oEDIIDa+e8KX1/qOlQvZMNKFrI5z3CoVKUjs=";
-    #  settingsSha256 = "sha256-um53cr2Xo90VhZM1bM2CH4q9b/1W2YOqUcvXPV6uw2s=";
-    #  persistencedSha256 = lib.fakeSha256;
-    #};
+    # package = config.boot.kernelPackages.nvidiaPackages.beta;
+    #    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+    #      version = "595.71.05";
+    #      sha256_64bit = "sha256-NiA7iWC35JyKQva6H1hjzeNKBek9KyS3mK8G3YRva4I=";
+    #      openSha256 = "sha256-Lfz71QWKM6x/jD2B22SWpUi7/og30HRlXg1kL3EWzEw=";
+    #      settingsSha256 = "sha256-mXnf3jyvznfB3OfKd657rxv0rYHQb/dX/Riw/+N9EKU=";
+
+    #	   usePersistenced = false;
+    #    };
 
   };
 
